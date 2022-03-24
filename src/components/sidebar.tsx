@@ -1,12 +1,15 @@
 import {Component} from "react";
+import {openSideBar} from "../state/actions/side_bar_action";
+import {connect} from "react-redux";
 
 class SideBarComponent extends Component<any, any>{
     state = {
     };
     render() {
+        console.log(this.props);
         return (
            <div>
-               <div className="sidenav-black-overlay"></div>
+               <div className={this.props.sidebar ? "sidenav-black-overlay active" : "sidenav-black-overlay" }></div>
                <div className="sidenav-wrapper" id="sidenavWrapper">
                    <div className="go-back-btn" id="goBack">
                        <svg className="bi bi-x" width="24" height="24" viewBox="0 0 16 16" fill="currentColor"
@@ -111,4 +114,15 @@ class SideBarComponent extends Component<any, any>{
     }
 }
 
-export default SideBarComponent;
+const mapStateToProps =(state:any)=>{
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    sidebar:state.sidebar.sidebar
+}
+
+const mapDispatchToProps = (dispatch:any )=>{
+    return{
+        openSideBar: ()=> dispatch(openSideBar())
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(SideBarComponent);
